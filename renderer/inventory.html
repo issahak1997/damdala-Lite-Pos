@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inventory Manager</title>
+  <style>
+    body{
+      margin:0;
+      font-family:Segoe UI, Arial, sans-serif;
+      background:#f1f5f9;
+    }
+
+    .topbar{
+      background:#2563eb;
+      color:white;
+      padding:15px 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .container{
+      padding:20px;
+    }
+
+    h2{
+      margin-top:10px;
+      margin-bottom:15px;
+      font-size:28px;
+    }
+
+    .form-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-bottom:20px;
+    }
+
+    input{
+      padding:12px;
+      min-width:180px;
+      font-size:16px;
+      border:1px solid #999;
+      border-radius:4px;
+    }
+
+    button{
+      padding:10px 16px;
+      cursor:pointer;
+      font-size:16px;
+      border:1px solid #888;
+      border-radius:4px;
+      background:white;
+    }
+
+    .primary-btn{
+      border:2px solid #f59e0b;
+    }
+
+    .edit-btn{
+      background:#2563eb;
+      color:white;
+      border:none;
+      margin-right:6px;
+    }
+
+    .delete-btn{
+      background:#dc2626;
+      color:white;
+      border:none;
+    }
+
+    .save-btn{
+      background:#16a34a;
+      color:white;
+      border:none;
+      margin-right:6px;
+    }
+
+    .cancel-btn{
+      background:#6b7280;
+      color:white;
+      border:none;
+    }
+
+    table{
+      width:100%;
+      margin-top:20px;
+      border-collapse:collapse;
+      background:white;
+    }
+
+    th,td{
+      padding:12px;
+      border:1px solid #ddd;
+      text-align:center;
+    }
+
+    th{
+      background:#f8fafc;
+      font-size:16px;
+    }
+
+    .action-cell{
+      white-space:nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div>
+      <button onclick="window.nav.goPOS()">POS</button>
+    </div>
+
+    <button onclick="window.nav.logout()">Logout</button>
+  </div>
+
+  <div class="container">
+    <h2>Add New Product</h2>
+
+    <div class="form-row">
+      <input type="text" id="productName" placeholder="Product Name" />
+      <input type="number" id="productCost" placeholder="Cost" step="0.01" />
+      <input type="number" id="productPrice" placeholder="Selling Price" step="0.01" />
+      <input type="number" id="productStock" placeholder="Stock" />
+      <input type="text" id="productBarcode" placeholder="Barcode" />
+      <input type="text" id="productCategory" placeholder="Category" />
+      <button class="primary-btn" onclick="addProduct()">Add Product</button>
+    </div>
+
+    <h2>Search Product</h2>
+    <input id="searchInventory" placeholder="Search..." onkeyup="searchInventory()">
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Cost</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Barcode</th>
+          <th>Category</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody id="InventoryTable"></tbody>
+    </table>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

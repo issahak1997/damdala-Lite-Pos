@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Damdala POS</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Segoe UI;
+background:linear-gradient(135deg,#1f3c88,#2c4fa3);
+}
+
+/* TOPBAR */
+
+.topbar{
+background:#0d1b2a;
+color:white;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.topbar-left button{
+background:#1e88e5;
+border:none;
+padding:8px 14px;
+color:white;
+cursor:pointer;
+border-radius:5px;
+margin-right:5px;
+font-size:14px;
+}
+
+.topbar-left button:hover{
+background:#1565c0;
+}
+
+/* SEARCH BAR */
+
+.toolbar{
+display:flex;
+gap:10px;
+padding:10px 20px;
+background:white;
+align-items:center;
+}
+
+.toolbar input{
+padding:8px;
+width:250px;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+.toolbar button{
+padding:8px 12px;
+border:none;
+border-radius:5px;
+background:#e0e0e0;
+cursor:pointer;
+}
+
+.toolbar button:hover{
+background:#d0d0d0;
+}
+
+/* MAIN LAYOUT */
+
+.pos-container{
+display:flex;
+height:calc(100vh - 100px);
+}
+
+/* PRODUCTS */
+
+.product-area{
+flex:2;
+padding:20px;
+overflow:auto;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fill,160px);
+gap:15px;
+}
+
+.product{
+background:white;
+border-radius:12px;
+padding:20px;
+text-align:center;
+cursor:pointer;
+box-shadow:0 8px 18px rgba(0,0,0,0.2);
+transition:all 0.25s ease;
+font-weight:600;
+}
+
+.product:hover{
+transform:translateY(-4px) scale(1.03);
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+.product h3{
+margin:5px 0;
+}
+
+.product p{
+margin:0;
+color:#1e88e5;
+font-weight:bold;
+}
+
+/* CART */
+
+.cart-area{
+flex:1;
+background:#f9f9f9;
+padding:20px;
+border-left:3px solid #ddd;
+display:flex;
+flex-direction:column;
+}
+
+/* CUSTOMER INPUT */
+
+.customer-input{
+width:100%;
+padding:10px;
+border-radius:6px;
+border:1px solid #ccc;
+margin-bottom:12px;
+font-size:14px;
+}
+
+/* CART TABLE */
+
+.cart-area table{
+width:100%;
+border-collapse:collapse;
+background:white;
+border-radius:8px;
+overflow:hidden;
+}
+
+.cart-area th{
+background:#1e88e5;
+color:white;
+padding:10px;
+font-weight:bold;
+}
+
+.cart-area td{
+padding:10px;
+border-bottom:1px solid #eee;
+text-align:center;
+}
+
+.cart-area tr:hover{
+background:#f2f6ff;
+}
+
+.cart-area button{
+background:#1e88e5;
+color:white;
+border:none;
+padding:4px 8px;
+border-radius:4px;
+cursor:pointer;
+}
+
+.cart-area button:hover{
+background:#1565c0;
+}
+
+/* TOTAL */
+
+.total{
+margin-top:10px;
+font-size:20px;
+font-weight:bold;
+}
+
+/* ACTION BUTTONS */
+
+/* CHECKOUT BUTTONS */
+
+button.cash-btn{
+background:#16a34a !important;
+color:white;
+border:none;
+padding:12px;
+width:100%;
+margin-top:10px;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+font-weight:bold;
+}
+
+button.cash-btn:hover{
+background:#15803d !important;
+}
+
+button.momo-btn{
+background:#7c3aed !important;
+color:white;
+border:none;
+padding:12px;
+width:100%;
+margin-top:10px;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+font-weight:bold;
+}
+
+button.momo-btn:hover{
+background:#5b21b6 !important;
+}
+
+button.clear-btn{
+background:#dc2626 !important;
+color:white;
+border:none;
+padding:12px;
+width:100%;
+margin-top:10px;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+font-weight:bold;
+}
+
+button.clear-btn:hover{
+background:#991b1b !important;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+
+<div class="topbar">
+
+<div class="topbar-left">
+
+<button onclick="window.nav.goPOS()">POS</button>
+
+<button id="inventoryBtn" onclick="window.nav.goInventory()">Inventory</button>
+
+<button onclick="window.nav.goDashboard()">Dashboard</button>
+
+<button id="settingsBtn" onclick="window.nav.goSettings()">Settings</button>
+
+<button onclick="window.nav.logout()">Logout</button>
+
+</div>
+
+<h2>Damdala Phones POS</h2>
+
+</div>
+
+<!-- SEARCH + FILTER -->
+
+<div class="toolbar">
+
+<input 
+id="searchProduct"
+placeholder="Search product..."
+onkeyup="searchProducts()"
+>
+
+<button onclick="filterCategory('All')">All</button>
+<button onclick="filterCategory('Phones')">Phones</button>
+<button onclick="filterCategory('Accessories')">Accessories</button>
+
+</div>
+
+<!-- MAIN CONTENT -->
+
+<div class="pos-container">
+
+<!-- PRODUCTS -->
+
+<div class="product-area">
+
+<h2>Products</h2>
+
+<div class="products" id="products"></div>
+
+</div>
+
+<!-- CART -->
+
+<div class="cart-area">
+
+<h2>Cart</h2>
+
+<h3>Customer Name</h3>
+
+<input 
+id="customerName"
+class="customer-input"
+placeholder="Customer name">
+
+<table>
+
+<thead>
+<tr>
+<th>Item</th>
+<th>Qty</th>
+<th>Price</th>
+<th></th>
+</tr>
+</thead>
+
+<tbody id="cart"></tbody>
+
+</table>
+
+<div class="total">
+Total: GHS <span id="total">0</span>
+</div>
+
+<button class="cash-btn" onclick="checkout('Cash')">
+Cash
+</button>
+
+<button class="momo-btn" onclick="checkout('Mobile Money')">
+Mobile Money
+</button>
+
+<button class="clear-btn" onclick="clearCart()">
+Clear Cart
+</button>
+
+</div>
+
+</div>
+
+<!-- APP SCRIPT -->
+
+<script src="app.js"></script>
+
+<!-- ROLE PERMISSIONS -->
+
+<script>
+
+/* hide admin features for cashier */
+
+const role = localStorage.getItem("role");
+
+if(role === "cashier"){
+
+const inventoryBtn =
+document.getElementById("inventoryBtn");
+
+const settingsBtn =
+document.getElementById("settingsBtn");
+
+if(inventoryBtn){
+inventoryBtn.style.display = "none";
+}
+
+if(settingsBtn){
+settingsBtn.style.display = "none";
+}
+
+}
+
+</script>
+
+</body>
+</html>

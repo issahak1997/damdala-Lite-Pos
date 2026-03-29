@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select POS Mode</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0f172a;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 20px 40px;
+            margin: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 220px;
+        }
+
+        .retail {
+            background: #22c55e;
+        }
+
+        .wholesale {
+            background: #3b82f6;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Select POS Mode</h1>
+
+    <button class="btn retail" onclick="openRetail()">Retail POS</button>
+    <button class="btn wholesale" onclick="openWholesale()">Wholesale POS</button>
+</div>
+
+<script>
+    function openRetail() {
+        window.location.href = "index.html?mode=retail";
+    }
+
+    function openWholesale() {
+        window.location.href = "index.html?mode=wholesale";
+    }
+
+    const role = localStorage.getItem("role");
+
+if (role === "cashier") {
+    document.querySelector(".wholesale").style.display = "none";
+}
+</script>
+
+</body>
+</html>

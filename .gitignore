@@ -1,0 +1,64 @@
+# =========================
+# NODE MODULES
+# =========================
+node_modules/
+
+# =========================
+# BUILD FILES
+# =========================
+dist/
+build/
+release/
+out/
+
+# Electron build artifacts
+*.exe
+*.msi
+*.zip
+*.tar.gz
+
+# =========================
+# DATABASE (IMPORTANT)
+# =========================
+pos.db
+*.sqlite
+*.sqlite3
+*.db
+
+# =========================
+# ENV FILES (SECRETS)
+# =========================
+.env
+.env.local
+.env.*
+
+# =========================
+# LOG FILES
+# =========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# EXPO (if any)
+# =========================
+.expo/
+.expo-shared/
+
+# =========================
+# OS FILES
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# VSCODE
+# =========================
+.vscode/
+
+# =========================
+# CACHE
+# =========================
+.cache/

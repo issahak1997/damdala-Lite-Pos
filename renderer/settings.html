@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Settings</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Segoe UI;
+background:#f4f6fa;
+}
+
+.topbar{
+background:#34495e;
+color:white;
+padding:15px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+padding:30px;
+max-width:700px;
+margin:auto;
+}
+
+.card{
+background:white;
+padding:20px;
+margin-bottom:20px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+}
+
+button{
+padding:10px 15px;
+margin-top:10px;
+cursor:pointer;
+}
+
+.danger-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  }
+
+.danger-btn:hover {
+  background: #b91c1c;
+  }
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+
+<div>
+<button onclick="window.nav.goPOS()">POS</button>
+<button onclick="window.nav.goInventory()">Inventory</button>
+<button onclick="window.nav.goDashboard()">Dashboard</button>
+<button id="resetSystemBtn" class="danger-btn">Reset All Business Data</button>
+</div>
+
+<button onclick="window.nav.logout()">Logout</button>
+
+</div>
+
+<div class="container">
+
+<h1>System Settings</h1>
+
+<div class="card">
+  <h3>Add User</h3>
+
+  <input id="newUsername" placeholder="Username">
+  <input id="newPassword" type="password" placeholder="Password">
+
+  <select id="role">
+    <option value="cashier">Cashier</option>
+    <option value="admin">Admin</option>
+  </select>
+
+  <button id="addUserBtn" type="button">Add User</button>
+</div>
+
+<div class="card">
+
+<h3>Receipt Customization</h3>
+
+<input id="storeName" placeholder="Store Name">
+
+<input id="storePhone" placeholder="Phone Number">
+
+<input id="storeAddress" placeholder="Address">
+
+<button onclick="saveSettings()">Save Receipt Settings</button>
+
+</div>
+
+</div>
+
+<script src="app.js"></script>
+
+<script>
+async function saveSettings() {
+  const store = document.querySelector("#storeName").value.trim();
+  const phone = document.querySelector("#storePhone").value.trim();
+  const address = document.querySelector("#storeAddress").value.trim();
+
+  await window.api.saveSettings({
+    store,
+    phone,
+    address
+  });
+
+  alert("Settings saved");
+}
+</script>
+
+</body>
+</html>

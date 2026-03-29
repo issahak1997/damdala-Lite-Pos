@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Damdala POS Dashboard</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Segoe UI;
+background:#0f172a;
+color:white;
+}
+
+.topbar{
+background:#1e293b;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.topbar button{
+background:#3b82f6;
+border:none;
+padding:8px 14px;
+color:white;
+cursor:pointer;
+border-radius:5px;
+margin-right:5px;
+}
+
+.topbar button:hover{
+background:#2563eb;
+}
+
+.container{
+padding:20px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:12px;
+box-shadow:0 8px 20px rgba(0,0,0,0.3);
+text-align:center;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+color:black;
+}
+
+th,td{
+padding:10px;
+border:1px solid #ddd;
+text-align:center;
+}
+
+.chartBox{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+margin-top:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+
+<div>
+<button onclick="window.nav.goPOS()">POS</button>
+<button id="inventoryBtn" onclick="window.nav.goInventory()">Inventory</button>
+<button onclick="window.nav.logout()">Logout</button>
+</div>
+
+</div>
+
+<button onclick="downloadReport()" style="margin-bottom:15px;">
+Download Report (PDF)
+</button>
+
+<div class="container">
+
+<h1>Sales Dashboard</h1>
+
+<div class="card">
+<h2>Total Sales</h2>
+<h1 id="salesTotal">GHS 0</h1>
+</div>
+
+<h2>Recent Sales</h2>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Total</th>
+<th>Date</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="recentSales"></tbody>
+</table>
+
+
+<div class="chartBox">
+<h2>Daily Sales</h2>
+<canvas id="dailyChart"></canvas>
+</div>
+
+<div class="chartBox">
+<h2>Best Selling Products</h2>
+<canvas id="productChart"></canvas>
+</div>
+
+<div id="profitChartSection">
+<canvas id="profitChart" height="100"></canvas>
+</div>
+
+
+
+<div class="chartBox" id="profitSection">
+<h2>Net Profit / Revenue</h2>
+
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Cost</th>
+<th>Price</th>
+<th>Qty Sold</th>
+<th>Revenue</th>
+<th>Profit</th>
+</tr>
+</thead>
+
+<tbody id="profitTable"></tbody>
+</table>
+
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:20px;">
+
+<div class="card">
+<h3>Total Revenue</h3>
+<h2 id="kpiRevenue">GHS 0</h2>
+</div>
+
+<div class="card">
+<h3>Total Profit</h3>
+<h2 id="kpiProfit">GHS 0</h2>
+</div>
+
+<div class="card">
+<h3>Total Orders</h3>
+<h2 id="kpiOrders">0</h2>
+</div>
+
+<div class="card">
+<h3>Best Product</h3>
+<h2 id="kpiBest">-</h2>
+</div>
+
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+<script>
+const role = localStorage.getItem("role");
+
+if(role === "cashier"){
+
+    // Hide inventory button
+    const inventoryBtn = document.getElementById("inventoryBtn");
+    if(inventoryBtn){
+        inventoryBtn.style.display = "none";
+    }
+
+    // Hide profit section
+    const profitSection = document.getElementById("profitSection");
+    if(profitSection){
+        profitSection.style.display = "none";
+    }
+
+}
+
+let currentRange = "today";
+
+function setRange(range){
+currentRange = range;
+
+console.log("Switching to:", range);
+
+// reload charts
+loadAnalytics(range);
+}
+</script>
+<script>
+
+
+
+/* Hide profit section */
+
+
+</script>
+
+</body>
+</html>

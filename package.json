@@ -1,0 +1,63 @@
+{
+  "name": "damdala-lite-pos",
+  "version": "1.0.0",
+  "description": "Offline POS for Damdala Phones and Accessories",
+  "main": "main.js",
+  "author": "Alhassan Issahak",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win nsis",
+    "pack": "electron-builder --dir"
+  },
+  "build": {
+    "appId": "com.damdala.pos",
+    "productName": "Damdala POS",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "main.js",
+      "preload.js",
+      "database.js",
+      "renderer/**/*",
+      "package.json",
+      "!dist/*",
+      "!backup/*",
+      "!reports/*",
+      "node_modules/**/*"
+    ],
+    "asar": true,
+    "win": {
+      "icon": "renderer/assets/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "Damdala-POS-Setup.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Damdala POS",
+      "deleteAppDataOnUninstall": false
+    }
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "electron-log": "^5.4.1",
+    "exceljs": "^4.4.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "electron": "^37.2.0",
+    "electron-builder": "^25.1.8"
+  }
+}
